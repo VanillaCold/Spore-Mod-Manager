@@ -98,11 +98,11 @@ namespace SporeMods.Core
 				}
 				else if (Path.GetExtension(path).ToLowerInvariant() == ".package")
 				{
-					/*result = await */RegisterLoosePackageModAsync(path);
+					/*result = await */await RegisterLoosePackageModAsync(path);
 				}
 				else if (Path.GetExtension(path).ToLowerInvariant() == ".sporemod")
 				{
-					/*result = await */RegisterSporemodModAsync(path);
+					/*result = await */await RegisterSporemodModAsync(path);
 				}
 				else
 				{
@@ -508,14 +508,26 @@ namespace SporeMods.Core
 
 								if (!isUnique)
 								{
-									if ((prevConfigDirPath != null) && Directory.Exists(prevConfigDirPath))
-										Directory.Move(prevConfigDirPath, Path.Combine(Settings.TempFolderPath, Path.GetFileName(prevConfigDirPath)));
+
 									//File.Move(Path.Combine(prevConfigDirPath, "ModInfo.xml"), Path.Combine(prevConfigDirPath, "OldModInfo.xml"));*/
 
 
 									/*foreach (string s in Directory.EnumerateFiles(prevConfigDirPath))
 										oldFiles.Add(s);*/
 
+									//prevMod.UninstallModAsync();
+									if ((prevConfigDirPath != null) && Directory.Exists(prevConfigDirPath))
+									{
+										if (!Directory.Exists(Path.Combine(Settings.TempFolderPath, Path.GetFileName(prevConfigDirPath))))
+										{
+											Directory.Move(prevConfigDirPath, Path.Combine(Settings.TempFolderPath, Path.GetFileName(prevConfigDirPath)));
+										}
+										else
+                                        {
+											Directory.Delete(Path.Combine(Settings.TempFolderPath, Path.GetFileName(prevConfigDirPath)),true);
+											Directory.CreateDirectory(Path.Combine(Settings.TempFolderPath, Path.GetFileName(prevConfigDirPath)));
+                                        }
+									}
 									ModsManager.RemoveMod(prevMod);
 								}
 							});
