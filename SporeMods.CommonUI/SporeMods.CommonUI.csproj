@@ -7,8 +7,6 @@
 	<UseWPF>true</UseWPF>
 	<AssemblyTitle>SporeMods.CommonUI</AssemblyTitle>
     <Product>SporeMods.CommonUI</Product>
-    <AssemblyVersion>1.7.9.1</AssemblyVersion>
-    <FileVersion>1.7.9.1</FileVersion>
   </PropertyGroup>
   <Import Project="..\SporeMods.SharedOutputDirs.props" />
   <ItemGroup>

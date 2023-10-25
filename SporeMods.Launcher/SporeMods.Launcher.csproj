@@ -12,8 +12,6 @@
   <PropertyGroup>
     <ApplicationIcon>..\AppIcons\ModLauncherIcon.ico</ApplicationIcon>
     <AssemblyName>Launch Spore</AssemblyName>
-    <AssemblyVersion>1.7.9.1</AssemblyVersion>
-    <FileVersion>1.7.9.1</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\SporeMods.CommonUI\SporeMods.CommonUI.csproj">

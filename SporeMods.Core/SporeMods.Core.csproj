@@ -6,8 +6,6 @@
     <OutputType>Library</OutputType>
     <AssemblyTitle>SporeMods.Core</AssemblyTitle>
     <Product>SporeMods.Core</Product>
-    <AssemblyVersion>1.7.9.1</AssemblyVersion>
-    <FileVersion>1.7.9.1</FileVersion>
   </PropertyGroup>
   <Import Project="..\SporeMods.SharedOutputDirs.props" />
   <ItemGroup>
