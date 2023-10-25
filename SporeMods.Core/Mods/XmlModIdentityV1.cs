@@ -223,6 +223,14 @@ namespace SporeMods.Core.Mods
 				if (nodeName == "prerequisite")
 				{
 					var gameAttr = subNode.Attribute("game");
+					
+					if (gameAttr != null) //Perform this check when the attribute isn't null
+                    {
+						if (gameAttr.Value == "") //Check if its value is still blank, meaning it should be the ModAPI location.
+                        {
+							gameAttr = null; //Just set it to null as a quick fix, so that the SMM doesn't fail to install the mod.
+                        }
+                    }
 
 					identity.Files.AddRange(ParseFiles(subNode.Value, gameAttr == null ? null : gameAttr.Value,
 						"Mod 'prerequisite'", "game"));
