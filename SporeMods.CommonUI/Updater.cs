@@ -188,7 +188,7 @@ namespace SporeMods.CommonUI
 				exceptionShown = true;
 				Exception current = exception;
 				int count = 0;
-				string errorText = "\n\nPlease send the contents this MessageBox and all which follow it to rob55rod\\Splitwirez, along with a description of what you were doing at the time.\n\nThe Spore Mod Manager will exit after the last Inner exception has been reported.";
+				string errorText = "\n\nPlease send the contents this MessageBox and all which follow it to Chocice75\\VanillaCold, along with a description of what you were doing at the time.\n\nThe Spore Mod Manager will exit after the last Inner exception has been reported.";
 				string errorTitle = "Something is very wrong here. Layer ";
 				while (current != null)
 				{

@@ -104,7 +104,7 @@ namespace SporeMods.Core
 		/// <returns></returns>
 		public static bool HasProgramUpdate(out GithubRelease release)
 		{
-			release = GetLatestGithubRelease("Splitwirez", "Spore-Mod-Manager");
+			release = GetLatestGithubRelease("VanillaCold", "Spore-Mod-Manager");
 			//release = GetLatestGithubRelease("emd4600", "sporemodder-fx");
 			var updateVersion = ParseGithubVersion(release.tag_name);
 

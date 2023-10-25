@@ -10,6 +10,8 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <AssemblyName>ModAPIUpdateSetup</AssemblyName>
     <ApplicationIcon>..\AppIcons\ModManagerSetupIcon.ico</ApplicationIcon>
+    <AssemblyVersion>1.7.9.1</AssemblyVersion>
+    <FileVersion>1.7.9.1</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

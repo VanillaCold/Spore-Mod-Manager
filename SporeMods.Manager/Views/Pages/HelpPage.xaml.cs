@@ -31,6 +31,7 @@ namespace SporeMods.Manager
 		{
 			new CreditsItem("Splitwirez (formerly rob55rod)", "Designed - and lead the effort to build - the Spore Mod Manager. (I couldn't have done it alone though!)", @"https://github.com/Splitwirez"),
 			new CreditsItem("emd4600", "Started the Spore ModAPI Project. Created the Spore ModAPI Launcher Kit, which laid the foundations for the Spore Mod Manager. Helped build the Spore Mod Manager to be as robust as possible. Oh, and Spanish and Catalan translations.", @"https://github.com/emd4600"),
+			new CreditsItem("VanillaCold", "Forking and continuing development of the Spore Mod Manager", @"https://github.com/VanillaCold"),
 			new CreditsItem("reflectronic", "Provided invaluable guidance and assistance with code architecture, asynchronous behaviour, and working the inner machinations of .NET Core in the Spore Mod Manager's favor.", @"https://github.com/reflectronic"),
 			//new CreditsItem("DotNetZip (formerly Ionic.Zip)", "Zip archive library used throughout the Spore Mod Manager.", @"https://www.nuget.org/packages/DotNetZip/"),
 			new CreditsItem("Newtonsoft", "Created the Json.NET library, which is used for update retrieval.", @"https://www.newtonsoft.com/json"),
@@ -45,7 +46,6 @@ namespace SporeMods.Manager
 			new CreditsItem("Magic Gonads", "Testing", @"https://github.com/MagicGonads"),
 			new CreditsItem("KloxEdge", "Testing"),
 			new CreditsItem("Liskomato", "Testing"),
-			new CreditsItem("ChocIce75", "Testing"),
 			new CreditsItem("Deoxys_0", "Testing"),
 			new CreditsItem("Psi", "Testing"),
 			new CreditsItem("Ivy", "Testing"),
