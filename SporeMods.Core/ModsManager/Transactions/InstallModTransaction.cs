@@ -45,9 +45,27 @@ namespace SporeMods.Core.Mods
                 return false;
             }
 
-            
+            foreach (ISporeMod existingMod in ModsManager.InstalledMods)
+            {
+                if (existingMod.Unique == _entry.Mod.Unique && existingMod != _entry.Mod)
+                {
+                    exception = await existingMod.PurgeAsync(this);
+                    if (exception != null)
+                    {
+                        Exception = exception;
+                        return false;
+                    }
+
+                    exception = await existingMod.RemoveRecordFilesAsync(this,false);
+                    if (exception != null)
+                    {
+                        Exception = exception;
+                        return false;
+                    }
+                }
+            }
+
             Job.TrySetActivityRange(JobBase.PROGRESS_OVERALL_MAX / 2, JobBase.PROGRESS_OVERALL_MAX);
-            
 
             exception = await _entry.Mod.ApplyAsync(this);
             if (exception != null)
