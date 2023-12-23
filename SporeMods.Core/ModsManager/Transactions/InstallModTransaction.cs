@@ -57,12 +57,11 @@ namespace SporeMods.Core.Mods
                     removalMods.Add(existingMod);
                 }
             }
-
-
-
+            //For each of the mods marked for removal, just remove them from the list.
+            //This cannot be done in the foreach loop, as it causes an error in this case.
             foreach (ISporeMod mod in removalMods)
             {
-                ModsManager.InstalledMods.Remove(mod);
+                await OperationAsync(new RemoveModFromRecordOp(mod));
             }
 
             await Task.Run(() =>
