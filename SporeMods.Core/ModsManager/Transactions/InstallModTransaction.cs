@@ -28,6 +28,43 @@ namespace SporeMods.Core.Mods
             ZipArchive archive = null;
             Job.TrySetActivityRange(0, JobBase.PROGRESS_OVERALL_MAX / 2);
 
+
+            ///This block of code is to ensure that updated versions of an already installed mod can be installed.
+            ///TODO; ensure that multiple mods with the same unique identifier can't be installed simultaneously.
+            Exception exception = null;
+            List<ISporeMod> removalMods = new List<ISporeMod>();
+            //Remove all mods with the same identifier as the mod being added
+            foreach (ISporeMod existingMod in ModsManager.InstalledMods) //Loop through the entire modlist.
+            {
+                //If the mod's unique identifier is the same as one on the modlist,
+                if (existingMod.Unique == _entry.Mod.Unique && existingMod != _entry.Mod)
+                {
+                    //Remove all files from the old mod
+                    exception = await existingMod.PurgeAsync(this);
+                    if (exception != null)
+                    {
+                        Exception = exception;
+                        return false;
+                    }
+
+                    //And remove all files from the new mod too.
+                    exception = await existingMod.RemoveRecordFilesAsync(this, false);
+                    if (exception != null)
+                    {
+                        Exception = exception;
+                        return false;
+                    }
+                    removalMods.Add(existingMod);
+                }
+            }
+
+
+
+            foreach (ISporeMod mod in removalMods)
+            {
+                ModsManager.InstalledMods.Remove(mod);
+            }
+
             await Task.Run(() =>
             {
                 string extension = Path.GetExtension(_entry.ModPath);
@@ -36,33 +73,13 @@ namespace SporeMods.Core.Mods
                     archive = ZipFile.OpenRead(_entry.ModPath);
             });
 
-            Exception exception = await _entry.Mod.ExtractRecordFilesAsync(this, _entry.ModPath, archive);
+            exception = await _entry.Mod.ExtractRecordFilesAsync(this, _entry.ModPath, archive);
             archive?.Dispose();
 
             if (exception != null)
             {
                 Exception = exception;
                 return false;
-            }
-
-            foreach (ISporeMod existingMod in ModsManager.InstalledMods)
-            {
-                if (existingMod.Unique == _entry.Mod.Unique && existingMod != _entry.Mod)
-                {
-                    exception = await existingMod.PurgeAsync(this);
-                    if (exception != null)
-                    {
-                        Exception = exception;
-                        return false;
-                    }
-
-                    exception = await existingMod.RemoveRecordFilesAsync(this,false);
-                    if (exception != null)
-                    {
-                        Exception = exception;
-                        return false;
-                    }
-                }
             }
 
             Job.TrySetActivityRange(JobBase.PROGRESS_OVERALL_MAX / 2, JobBase.PROGRESS_OVERALL_MAX);
