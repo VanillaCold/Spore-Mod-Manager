@@ -30,6 +30,9 @@
     <Style x:Key="MainWindowFooterZoneStyle" TargetType="{x:Type cui:Zone}">
         <Style.Resources>
             <sys:Double x:Key="MainWindowFooterSpacing">5</sys:Double>
+            <!--
+            <GridLength x:Key="MainWindowFooterSpacingGridLength" Value="{DynamicResource MainWindowFooterSpacing}" />
+            -->
         </Style.Resources>
         <Setter Property="Padding" Value="5"/>
         <Setter Property="Height" Value="50"/>
