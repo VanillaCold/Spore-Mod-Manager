@@ -45,6 +45,7 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <cui:UniformStackPanel x:Name="LeftButtons"
@@ -67,7 +68,13 @@
                                             IsEnabled="{Binding CanUninstallMods}"
                                             Command="{cui:FuncBinding UninstallModsCommand}"/>
                                 </cui:UniformStackPanel>
-                                <cui:FloorPanel Grid.Column="1">
+                                <Control Width="{DynamicResource MainWindowFooterSpacing}"
+                                         Grid.Column="1"
+                                         Visibility="Hidden"
+                                         Focusable="False"
+                                         IsTabStop="False"
+                                         IsHitTestVisible="False" />
+                                <cui:FloorPanel Grid.Column="2">
                                     <Button x:Name="LaunchSporeButton"
                                             Content="{DynamicResource Footer!LaunchGame}"
                                             Style="{DynamicResource LaunchGameButtonStyle}"
