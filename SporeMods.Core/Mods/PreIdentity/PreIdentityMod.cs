@@ -286,7 +286,7 @@ _fileNames = fileNames;
                     else if (Path.GetExtension(hName).Equals(ModUtils.MOD_SUBFILE_EX_DLL, StringComparison.OrdinalIgnoreCase))
                         dllNames.Add(hName);
                     else if (hName.Equals(ModUtils.ID_XML_FILE_NAME))
-                        throw new ModException(false, "_AAAAAAAAAAA_ (PLACEHOLDER)");
+                        throw new ModException(false, "ModInfo.XML could not be parsed due to an unknown error in the file. Please check the syntax! (PLACEHOLDER)");
                 }
 
                 string recordDirName = ModUtils.GetModsRecordDirNameFromFilePath(inFilePath);

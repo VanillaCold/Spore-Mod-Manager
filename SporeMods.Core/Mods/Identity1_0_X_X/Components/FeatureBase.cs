@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace SporeMods.Core.Mods.ModIdentity.V1_0_X_XComponents
 {
@@ -116,6 +117,7 @@ namespace SporeMods.Core.Mods.ModIdentity.V1_0_X_XComponents
             string descImageName = Unique + ".png";
             bool hasDescImage = (placement != ImagePlacementType.None) && fileNames.Any(x => x.Equals(descImageName, StringComparison.OrdinalIgnoreCase));
 
+            Debug.Print(descImageName);
 
             DescriptionImage descImage = null;
             if (hasDescImage)
