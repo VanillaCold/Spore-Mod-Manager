@@ -24,14 +24,24 @@ namespace SporeMods.Core
 		}
 
 		static Action _extractOriginPrerequisites = null;
+		static Action _extractSteamPrerequisites = null;
 		public static void ExtractOriginPrerequisites()
 			=> _extractOriginPrerequisites();
 
+
+		public static void ExtractSteamPrerequisites()
+			=> _extractSteamPrerequisites();
+
 		public static void ProvideExtractOriginPrerequisitesFunc(Action h)
-        {
+		{
 			if (_extractOriginPrerequisites == null)
 				_extractOriginPrerequisites = h;
-        }
+		}
+		public static void ProvideExtractSteamPrerequisitesFunc(Action h)
+		{
+			if (_extractSteamPrerequisites == null)
+				_extractSteamPrerequisites = h;
+		}
 
 		static bool _needsPrerequisitesExtracted = false;
 		public static bool NeedsPrerequisitesExtracted

@@ -45,10 +45,13 @@ namespace SporeMods.Core.Injection
 		public static int CurrentError = 0;
 
 		static bool _needsOriginPrerequisites = false;
+		static bool _needsSteamPrerequisites = false;
 		public static bool NeedsOriginPrerequisites
         {
 			get => _needsOriginPrerequisites;
         }
+
+		public static bool NeedsSteamPrerequisites { get => _needsSteamPrerequisites; }
 
 		static void DeleteFolder(string path)
 		{
@@ -115,6 +118,20 @@ namespace SporeMods.Core.Injection
 									_needsOriginPrerequisites = true;
 								}
 								Externals.ExtractOriginPrerequisites();
+							}
+
+							if ((_executableType == GameExecutableType.Steam_Oct2024))
+                            {
+
+								try
+								{
+									_needsSteamPrerequisites = Externals.NeedsPrerequisitesExtracted;
+								}
+								catch (Exception)
+								{
+									_needsSteamPrerequisites = true;
+								}
+								Externals.ExtractSteamPrerequisites();
 							}
 
 							string dllEnding = GetExecutableDllSuffix(_executableType);

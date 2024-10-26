@@ -93,6 +93,9 @@ namespace SporeMods.CommonUI
 		static long ORIGIN_PREREQ_EX_L = 24885248;
 		static string ORIGIN_PREREQ_DL = "steam_api.dll";
 		public const string EXTRACT_ORIGIN_PREREQ = "--origin-first-run";
+
+		public const string EXTRACT_STEAM_PREREQ = "--steam-first-run";
+		static string STEAM_PREREQ_TX = "steam_appid.txt";
 		static void WarnIfMissingOriginPrerequisites(Assembly assembly)
 		{
 			try
@@ -105,10 +108,12 @@ namespace SporeMods.CommonUI
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("You are running a build of the Spore Mod Manager which is missing Origin Spore-specific prerequisites.\n\n" +
-					"As such, if you are have installed Spore from Origin, you will have to use a build which has these prerequisites (such as an official build) at least once before you will be able to use this one. (NOT LOCALIZED)\n\n\n\n" + ex.ToString(), "Warning regarding Origin Spore (NOT LOCALIZED)");
+				MessageBox.Show("You are running a build of the Spore Mod Manager which is missing Origin and Steam Spore-specific prerequisites.\n\n" +
+					"As such, if you are have installed Spore from Origin or Steam, you will have to use a build which has these prerequisites (such as an official build) at least once before you will be able to use this one. (NOT LOCALIZED)\n\n\n\n" + ex.ToString(), "Warning regarding Origin Spore (NOT LOCALIZED)");
 			}
 		}
+
+
 
 		public static void ExtractOriginPrerequisites()
 		{
@@ -134,24 +139,60 @@ namespace SporeMods.CommonUI
 			}
 		}
 
+		public static void ExtractSteamPrerequisites()
+		{
+			if (!SporeLauncher.NeedsSteamPrerequisites)
+				return;
+
+			if (Permissions.IsUACEnabled && (!Permissions.IsAdministrator()))
+			{
+				MessageDisplay.ShowMessageBox("A few Steam-specific prerequisite files now will be extracted. This is required for the Spore Mod Manager to work with Origin Spore.\n\nDoing this requires administrator privileges, so you'll need to say 'Yes' to the prompt after this one. (NOT LOCALIZED)", string.Empty);
+				try
+				{
+					CrossProcess.StartLauncher(EXTRACT_STEAM_PREREQ, true).WaitForExit();
+				}
+				catch (Exception ex)
+				{
+					MessageDisplay.ShowMessageBox("Couldn't extract Steam prerequisites (NOT LOCALIZED)" + $"\n\n{ex} ", string.Empty);
+				}
+			}
+			else if (/*Permissions.IsAdministrator() && */Environment.GetCommandLineArgs().Any(x => x.Trim('"') == EXTRACT_STEAM_PREREQ))
+			{
+				ExtractedSteamPrerequisitesIfNeeded();
+				Process.GetCurrentProcess().Kill();
+			}
+		}
+
 		static void GetPrereqOutPaths(out string exOut, out string dlOut)
-        {
+		{
 			exOut = Path.Combine(GameInfo.SporebinEP1, ORIGIN_PREREQ_EX);
 			dlOut = Path.Combine(GameInfo.SporebinEP1, ORIGIN_PREREQ_DL);
 		}
+		static void GetSteamPrereqOutPaths(out string exOut, out string txOut)
+		{
+			exOut = Path.Combine(GameInfo.SporebinEP1, ORIGIN_PREREQ_EX);
+			txOut = Path.Combine(GameInfo.SporebinEP1, STEAM_PREREQ_TX);
+		}
 
 		public static bool NeedsPrerequisitesExtracted
-        {
+		{
 			get
-            {
+			{
 				GetPrereqOutPaths(out string exOut, out string dlOut);
 				return !(File.Exists(exOut) && File.Exists(dlOut) && (new FileInfo(exOut).Length == ORIGIN_PREREQ_EX_L));
 			}
-        }
+		}
+
 		static void ExtractedPrerequisitesIfNeeded()
 		{
 			if (NeedsPrerequisitesExtracted)
 				LiterallyJustBlindlyExtractOriginPrerequisites();
+		}
+
+		static void ExtractedSteamPrerequisitesIfNeeded()
+		{
+			if (NeedsPrerequisitesExtracted)
+				LiterallyJustBlindlyExtractSteamPrerequisites();
 		}
 
 		static void LiterallyJustBlindlyExtractOriginPrerequisites()
@@ -168,6 +209,27 @@ namespace SporeMods.CommonUI
 				using (var resource = assembly.GetManifestResourceStream(ORIGIN_PREREQ_PREFIX + ORIGIN_PREREQ_DL))
 				{
 					using (var file = new FileStream(dlOut, FileMode.Create, FileAccess.Write))
+						resource.CopyTo(file);
+				}
+			});
+		}
+
+
+
+		static void LiterallyJustBlindlyExtractSteamPrerequisites()
+		{
+			GetSteamPrereqOutPaths(out string exOut, out string txOut);
+			RunWithSporeMods_CoreAssembly(assembly =>
+			{
+				using (var resource = assembly.GetManifestResourceStream(ORIGIN_PREREQ_PREFIX + ORIGIN_PREREQ_EX))
+				{
+					using (var file = new FileStream(exOut, FileMode.Create, FileAccess.Write))
+						resource.CopyTo(file);
+				}
+
+				using (var resource = assembly.GetManifestResourceStream(ORIGIN_PREREQ_PREFIX + STEAM_PREREQ_TX))
+				{
+					using (var file = new FileStream(txOut, FileMode.Create, FileAccess.Write))
 						resource.CopyTo(file);
 				}
 			});

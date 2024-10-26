@@ -103,6 +103,7 @@ namespace SporeMods.CommonUI
 
 			Externals.SpecifyFuncCommandType(typeof(FuncCommand<>));
 			Externals.ProvideExtractOriginPrerequisitesFunc(VersionValidation.ExtractOriginPrerequisites);
+			Externals.ProvideExtractOriginPrerequisitesFunc(VersionValidation.ExtractSteamPrerequisites);
 			Externals.CreateBitmapImage = s =>
 			{
 				var mem = new MemoryStream();
