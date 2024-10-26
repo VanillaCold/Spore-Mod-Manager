@@ -67,7 +67,7 @@ namespace SporeMods.Core.Mods
                     doc = XDocument.Parse(text, ModUtils.ID_XML_LOAD_OPTIONS);
                 }
                 if (doc == null)
-                    throw new ModException(true, "_CCCCCCC_ (PLACEHOLDER)");
+                    throw new ModException(false, "_CCCCCCC_ (PLACEHOLDER)");
 
                 var xmlRoot = doc.Root;
 

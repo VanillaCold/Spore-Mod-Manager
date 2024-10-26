@@ -22,7 +22,7 @@ namespace SporeMods.Core.Injection
 			else
 			{
 				//System.Windows.Forms.MessageBox.Show("This version of Spore (" + type.ToString() + ") is not supported. Please inform rob55rod or emd4600 immediately.", "Unsupported Game Version");
-				//System.Windows.Forms.MessageBox.Show("If you're using the Steam version of Spore or the GOG version of Spore, please update to version 3.1.0.22 to proceed. If you're using Origin Spore and you see this message, or if you're already using a higher version of Spore, please inform rob55rod or emd4600 immediately.", "Unsupported Game Version");
+				//System.Windows.Forms.MessageBox.Show("If you're using the Steam version of Spore or the GOG version of Spore, please update to version 3.1.0.29 to proceed. If you're using Origin Spore and you see this message, or if you're already using a higher version of Spore, please inform rob55rod or emd4600 immediately.", "Unsupported Game Version");
 				Process.Start(new ProcessStartInfo(@"http://davoonline.com/phpBB3/viewtopic.php?f=108&t=6300")
 				{
 					UseShellExecute = true

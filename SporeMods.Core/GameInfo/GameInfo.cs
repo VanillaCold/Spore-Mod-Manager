@@ -17,6 +17,7 @@ namespace SporeMods.Core
 			Origin__March2017,
 			GogOrSteam__1_5_1,
 			GogOrSteam__March2017,
+			Steam_Oct2024,
 			None
 		}
 
@@ -25,10 +26,15 @@ namespace SporeMods.Core
 			[24909584] = GameExecutableType.Disk__1_5_1,
 			[31347984] = GameExecutableType.Origin__1_5_1,
 			[24898224] = GameExecutableType.Origin__March2017,
+			[24906040] = GameExecutableType.Origin__March2017,
 			[24888320] = GameExecutableType.GogOrSteam__1_5_1,
-			[24885248] = GameExecutableType.GogOrSteam__March2017,
+			[24885248] = GameExecutableType.GogOrSteam__March2017, 
+			[24895536] = GameExecutableType.GogOrSteam__March2017, //Function addresses between March2017 and October2024 executables are the same.
+			[25066744] = GameExecutableType.Steam_Oct2024, //Steamstub DRM means this version needs to be treated different
 			[0] = GameExecutableType.None
 		};
+
+		//`steam "steam://open/console/+download_depot 24720 24721 7407510787032991484"` so this when run will download the 2017 patch
 
 		/*public static int[] ExecutableSizes = { 
 										/* DISK*	24909584,

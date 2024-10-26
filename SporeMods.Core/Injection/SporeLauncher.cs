@@ -61,6 +61,7 @@ namespace SporeMods.Core.Injection
 
 		public static Version Spore__1_5_1 = new Version(3, 0, 0, 2818);
 		public static Version Spore__March2017 = new Version(3, 1, 0, 22);
+		public static Version Spore__Oct2024 = new Version(3, 1, 0, 29);
 		public static void LaunchGame()
 		{
 			try
@@ -974,7 +975,7 @@ namespace SporeMods.Core.Injection
 					MessageDisplay.RaiseError(new ErrorEventArgs(new InvalidOperationException(GetLocalizedString("LauncherError!GameVersion!TooOld"))));
 					return false;
 				}
-				else if (exeVersion > Spore__March2017)
+				else if (exeVersion > Spore__Oct2024)
 				{
 					MessageDisplay.RaiseError(new ErrorEventArgs(new InvalidOperationException(GetLocalizedString("LauncherError!GameVersion!WaitDidTheyActuallyUpdateSpore"))));
 					return false;
