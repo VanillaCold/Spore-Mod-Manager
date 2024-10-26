@@ -541,6 +541,8 @@ Help {
 				#ADDED
 				GogOrSteam__March2017 GOG/Steam (March 2017 Patch)
 				#ADDED
+				Steam__Oct2024 Steam (October 2024 Patch)
+				#ADDED
 				None Unknown
 			}
 		}

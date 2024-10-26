@@ -17,7 +17,7 @@ namespace SporeMods.Core.Injection
 		{
 			if (type == GameExecutableType.Disk__1_5_1)
 				return "SporeModAPI.disk.dll";
-			else if ((type == GameExecutableType.Origin__1_5_1) || (type == GameExecutableType.Origin__March2017) || (type == GameExecutableType.GogOrSteam__March2017))
+			else if ((type == GameExecutableType.Origin__1_5_1) || (type == GameExecutableType.Origin__March2017) || (type == GameExecutableType.GogOrSteam__March2017) || (type == GameExecutableType.Steam__Oct2024))
 				return "SporeModAPI.march2017.dll";
 			else
 			{

@@ -120,7 +120,7 @@ namespace SporeMods.Core.Injection
 								Externals.ExtractOriginPrerequisites();
 							}
 
-							if ((_executableType == GameExecutableType.Steam_Oct2024))
+							if (_executableType == GameExecutableType.Steam__Oct2024)
                             {
 
 								try

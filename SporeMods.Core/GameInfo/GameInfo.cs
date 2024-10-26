@@ -17,7 +17,7 @@ namespace SporeMods.Core
 			Origin__March2017,
 			GogOrSteam__1_5_1,
 			GogOrSteam__March2017,
-			Steam_Oct2024,
+			Steam__Oct2024,
 			None
 		}
 
@@ -30,7 +30,7 @@ namespace SporeMods.Core
 			[24888320] = GameExecutableType.GogOrSteam__1_5_1,
 			[24885248] = GameExecutableType.GogOrSteam__March2017, 
 			[24895536] = GameExecutableType.GogOrSteam__March2017, //Function addresses between March2017 and October2024 executables are the same.
-			[25066744] = GameExecutableType.Steam_Oct2024, //Steamstub DRM means this version needs to be treated different
+			[25066744] = GameExecutableType.Steam__Oct2024, //Steamstub DRM means this version needs to be treated different
 			[0] = GameExecutableType.None
 		};
 
@@ -79,6 +79,7 @@ namespace SporeMods.Core
 			[GameExecutableType.Disk__1_5_1] = _SPOREAPP,
 			[GameExecutableType.Origin__1_5_1] = _SPOREAPP_MODAPIFIX,
 			[GameExecutableType.Origin__March2017] = _SPOREAPP_MODAPIFIX,
+			[GameExecutableType.Steam__Oct2024] = _SPOREAPP_MODAPIFIX,
 			[GameExecutableType.GogOrSteam__1_5_1] = _SPOREAPP,
 			[GameExecutableType.GogOrSteam__March2017] = _SPOREAPP,
 			[GameExecutableType.None] = null
