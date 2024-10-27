@@ -8,7 +8,7 @@ Designed - and lead the effort to build - the Spore Mod Manager. (I couldn't hav
 
 
 ### [VanillaCold / Chocice75](https://github.com/VanillaCold)
-Forking and continuing development of the Spore Mod Manager, after the project had stopped.
+Forking and continuing development of the Spore Mod Manager, after the project had stopped its initial development.
 
 
 
@@ -59,6 +59,10 @@ Additional perspective on usability, testing.
 
 ### [cederenescio](http://rso.bg/)
 Indirectly provided substantial creative influence.
+
+
+### [Rosalie241](https://github.com/Rosalie241)
+Fixing the build process after an update to the Spore Mod Manager codebase
 
 
 
