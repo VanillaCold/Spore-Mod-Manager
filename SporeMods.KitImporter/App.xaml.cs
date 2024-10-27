@@ -21,7 +21,7 @@ namespace SporeMods.KitImporter
 	{
 		protected override void OnStartup(StartupEventArgs e)
 		{
-			CommonUI.MessageDisplay.EnsureConsole();
+			//CommonUI.MessageDisplay.EnsureConsole();
 
 			RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
 

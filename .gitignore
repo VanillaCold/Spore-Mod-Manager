@@ -344,3 +344,9 @@ Output
 /SporeMods.Launcher/ModAPIFix/steam_api.dll
 SporeModManagerSetup.e*
 BUILD_TO_USER_DIR
+/devBin/cs
+/devBin/de
+/devBin/es
+/devBin/fr
+/devBin/it
+/devBin

@@ -45,10 +45,10 @@ IF NOT EXIST .\AppIcons\%MMSIco%.ico (start /b /wait "" cmd.exe /c ".\build\Gene
 ::Build .NET binaries
 set R2R= -p:PublishReadyToRun=true
 set RELEASE=-c Release
-set PUBLISHPARAMS=%RELEASE% -o "%UNPACKAGEDOUT%"
+set PUBLISHPARAMS=%RELEASE% --self-contained true -o "%UNPACKAGEDOUT%"
 CALL :BUILDMAINPROJECTS
 
-set PUBLISHPARAMS=%RELEASE% --self-contained false -o "%UNPACKAGEDFDOUT%"
+set PUBLISHPARAMS=%RELEASE% --self-contained true -o "%UNPACKAGEDFDOUT%"
 CALL :BUILDMAINPROJECTS
 
 dotnet publish .\SporeMods.Launcher %PUBLISHPARAMSFD%

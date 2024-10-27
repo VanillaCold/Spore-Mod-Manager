@@ -7,10 +7,18 @@
         <AssemblyName>xLauncherKitImport</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
+      <None Remove="App.xaml" />
+      <None Remove="MainWindow.xaml" />
+    </ItemGroup>
+    <ItemGroup>
         <Content Include="..\AppIcons\ModManagerSetupIcon.ico">
             <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
             <LogicalName>ModManagerSetupIcon.ico</LogicalName>
         </Content>
+    </ItemGroup>
+    <ItemGroup>
+      <Page Include="App.xaml" />
+      <Page Include="MainWindow.xaml" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="../SporeMods.CommonUI/SporeMods.CommonUI.csproj" />
