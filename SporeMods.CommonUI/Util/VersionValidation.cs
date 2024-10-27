@@ -94,8 +94,10 @@ namespace SporeMods.CommonUI
 		static string ORIGIN_PREREQ_DL = "steam_api.dll";
 		public const string EXTRACT_ORIGIN_PREREQ = "--origin-first-run";
 
+		const string STEAM_PREREQ_PREFIX = "SteamPrereq.";
 		public const string EXTRACT_STEAM_PREREQ = "--steam-first-run";
 		static string STEAM_PREREQ_TX = "steam_appid.txt";
+		static string STEAM_PREREQ_BT = "downloadMarch2017.bat";
 		static void WarnIfMissingOriginPrerequisites(Assembly assembly)
 		{
 			try
@@ -146,7 +148,7 @@ namespace SporeMods.CommonUI
 
 			if (Permissions.IsUACEnabled && (!Permissions.IsAdministrator()))
 			{
-				MessageDisplay.ShowMessageBox("A few Steam-specific prerequisite files now will be extracted. This is required for the Spore Mod Manager to work with Origin Spore.\n\nDoing this requires administrator privileges, so you'll need to say 'Yes' to the prompt after this one. (NOT LOCALIZED)", string.Empty);
+				MessageDisplay.ShowMessageBox("A few Steam-specific prerequisite files now will be extracted. This is required for the Spore Mod Manager to work with Steam Spore.\n\nDoing this requires administrator privileges, so you'll need to say 'Yes' to the prompt after this one. (NOT LOCALIZED)", string.Empty);
 				try
 				{
 					CrossProcess.StartLauncher(EXTRACT_STEAM_PREREQ, true).WaitForExit();
@@ -168,9 +170,9 @@ namespace SporeMods.CommonUI
 			exOut = Path.Combine(GameInfo.SporebinEP1, ORIGIN_PREREQ_EX);
 			dlOut = Path.Combine(GameInfo.SporebinEP1, ORIGIN_PREREQ_DL);
 		}
-		static void GetSteamPrereqOutPaths(out string exOut, out string txOut)
+		static void GetSteamPrereqOutPaths(out string btOut, out string txOut)
 		{
-			exOut = Path.Combine(GameInfo.SporebinEP1, ORIGIN_PREREQ_EX);
+			btOut = Path.Combine(GameInfo.SporebinEP1, STEAM_PREREQ_BT);
 			txOut = Path.Combine(GameInfo.SporebinEP1, STEAM_PREREQ_TX);
 		}
 
@@ -218,21 +220,59 @@ namespace SporeMods.CommonUI
 
 		static void LiterallyJustBlindlyExtractSteamPrerequisites()
 		{
-			GetSteamPrereqOutPaths(out string exOut, out string txOut);
+			GetSteamPrereqOutPaths(out string btOut, out string txOut);
 			RunWithSporeMods_CoreAssembly(assembly =>
 			{
-				using (var resource = assembly.GetManifestResourceStream(ORIGIN_PREREQ_PREFIX + ORIGIN_PREREQ_EX))
+				using (var resource = assembly.GetManifestResourceStream(STEAM_PREREQ_PREFIX + STEAM_PREREQ_BT))
 				{
-					using (var file = new FileStream(exOut, FileMode.Create, FileAccess.Write))
+					using (var file = new FileStream(btOut, FileMode.Create, FileAccess.Write))
 						resource.CopyTo(file);
 				}
 
-				using (var resource = assembly.GetManifestResourceStream(ORIGIN_PREREQ_PREFIX + STEAM_PREREQ_TX))
+				using (var resource = assembly.GetManifestResourceStream(STEAM_PREREQ_PREFIX + STEAM_PREREQ_TX))
 				{
 					using (var file = new FileStream(txOut, FileMode.Create, FileAccess.Write))
 						resource.CopyTo(file);
 				}
 			});
+
+			RunDownloadMarch2017(btOut);
 		}
+
+		static void RunDownloadMarch2017(string btOut)
+        {
+			if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+            {
+				MessageDisplay.ShowMessageBox("March2017 download script is not yet implemented for Unix and Unix-like systems.\nYou will not be able to download yet. (NOT LOCALIZED)", "Error Downloading March2017 Executable (Not Localized)");
+				return;
+            }
+
+			ProcessStartInfo cmdInfo;
+			Process cmdProcess;
+
+			cmdInfo = new ProcessStartInfo("cmd.exe", "/c \"" + btOut + "\"");
+			cmdInfo.CreateNoWindow = false;
+			cmdInfo.UseShellExecute = true;
+
+			cmdInfo.RedirectStandardOutput = false;
+			cmdInfo.RedirectStandardError = false;
+			cmdInfo.WindowStyle = ProcessWindowStyle.Normal;
+
+			cmdProcess = Process.Start(cmdInfo);
+			cmdProcess.WaitForExit();
+
+			//string error = cmdProcess.StandardError.ReadToEnd();
+
+
+			if (!File.Exists(Path.Combine(GameInfo.SporebinEP1, ORIGIN_PREREQ_EX)))
+            {
+				MessageDisplay.ShowMessageBox("An error was occurred when downloading or copying the March2017 executable from Steam.\nYou may be unable to play the game modded. (NOT LOCALIZED)", "Error Downloading March2017 Executable (Not Localized)");
+			}
+            else
+            {
+				MessageDisplay.ShowMessageBox("Successfully downloaded the March2017 executable. The game will now launch. (NOT LOCALIZED)", "Success");
+            }
+
+        }
 	}
 }
