@@ -285,6 +285,7 @@ namespace SporeMods.KitImporter
 							string displayName = mod.DisplayName;
 							if (displayName == null) displayName = mod.Name;
 							if (displayName == null) displayName = mod.Unique;
+							
 							XmlModIdentity.CreateModInfoXml(mod.Unique, mod.Name, managerModConfigPath, out XDocument document);
 
 							foreach (ModFile file in mod.Files)

@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-    <Import Project="..\build\Target.App.props" />
     <PropertyGroup>
         <AssemblyTitle>SporeMods.KitImporter</AssemblyTitle>
         <Product>SporeMods.KitImporter</Product>
@@ -14,12 +13,14 @@
         </Content>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\SporeMods.CommonUI\SporeMods.CommonUI.csproj"/>
-        <ProjectReference Include="..\SporeMods.Core\SporeMods.Core.csproj"/>
+      <ProjectReference Include="../SporeMods.CommonUI/SporeMods.CommonUI.csproj" />
+      <ProjectReference Include="../SporeMods.Launcher/SporeMods.Launcher.csproj">
+        <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      </ProjectReference>
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\SporeMods.Manager\SporeMods.Manager.csproj">
-            <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+          <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
         </ProjectReference>
     </ItemGroup>
 </Project>
