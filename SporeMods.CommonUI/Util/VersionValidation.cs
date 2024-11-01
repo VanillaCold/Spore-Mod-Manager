@@ -165,6 +165,15 @@ namespace SporeMods.CommonUI
 			}
 		}
 
+		public static void WarnIfSMLInstalled()
+        {
+			if (HasSMLInstalled)
+            {
+				MessageDisplay.ShowMessageBox("The Spore Mod Loader has been detected in your Spore install.\nLaunching Spore through the Spore Mod Manager will not work until this is removed. (NOT LOCALIZED)", string.Empty);
+				throw new ApplicationException("The Spore Mod Loader has been detected in your Spore install.\nLaunching Spore through the Spore Mod Manager will not work until this is removed. (NOT LOCALIZED)");
+            }
+        }
+
 		static void GetPrereqOutPaths(out string exOut, out string dlOut)
 		{
 			exOut = Path.Combine(GameInfo.SporebinEP1, ORIGIN_PREREQ_EX);
@@ -182,6 +191,14 @@ namespace SporeMods.CommonUI
 			{
 				GetPrereqOutPaths(out string exOut, out string dlOut);
 				return !(File.Exists(exOut) && File.Exists(dlOut) && (new FileInfo(exOut).Length == ORIGIN_PREREQ_EX_L));
+			}
+		}
+
+		public static bool HasSMLInstalled
+		{
+			get
+			{
+				return File.Exists(GameInfo.SporebinEP1 + "/dinput8.dll");
 			}
 		}
 

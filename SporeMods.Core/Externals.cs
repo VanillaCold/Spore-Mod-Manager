@@ -25,12 +25,17 @@ namespace SporeMods.Core
 
 		static Action _extractOriginPrerequisites = null;
 		static Action _extractSteamPrerequisites = null;
+		static Action _warnIfSML = null;
 		public static void ExtractOriginPrerequisites()
 			=> _extractOriginPrerequisites();
 
 
 		public static void ExtractSteamPrerequisites()
 			=> _extractSteamPrerequisites();
+
+
+		public static void WarnIfSMLInstalled()
+			=> _warnIfSML();
 
 		public static void ProvideExtractOriginPrerequisitesFunc(Action h)
 		{
@@ -41,6 +46,12 @@ namespace SporeMods.Core
 		{
 			if (_extractSteamPrerequisites == null)
 				_extractSteamPrerequisites = h;
+		}
+
+		public static void WarnIfSMLInstalled(Action h)
+		{
+			if (_warnIfSML == null)
+				_warnIfSML = h;
 		}
 
 		static bool _needsPrerequisitesExtracted = false;

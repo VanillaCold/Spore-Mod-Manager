@@ -104,6 +104,9 @@ namespace SporeMods.CommonUI
 			Externals.SpecifyFuncCommandType(typeof(FuncCommand<>));
 			Externals.ProvideExtractOriginPrerequisitesFunc(VersionValidation.ExtractOriginPrerequisites);
 			Externals.ProvideExtractSteamPrerequisitesFunc(VersionValidation.ExtractSteamPrerequisites);
+
+			Externals.WarnIfSMLInstalled(VersionValidation.WarnIfSMLInstalled);
+
 			Externals.CreateBitmapImage = s =>
 			{
 				var mem = new MemoryStream();

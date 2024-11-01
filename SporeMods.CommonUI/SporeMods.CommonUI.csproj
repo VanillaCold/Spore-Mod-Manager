@@ -4,8 +4,6 @@
         <UseWPF>true</UseWPF>
         <UseWindowsForms>true</UseWindowsForms>
         <AssemblyTitle>User interface components for $(Product)</AssemblyTitle>
-        <AssemblyVersion>1.8.0.0</AssemblyVersion>
-        <FileVersion>1.8.0.0</FileVersion>
     </PropertyGroup>
     
     <ItemGroup>

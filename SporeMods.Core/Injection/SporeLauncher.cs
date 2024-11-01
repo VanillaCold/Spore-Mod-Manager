@@ -77,6 +77,7 @@ namespace SporeMods.Core.Injection
 					//exeSizes.CopyTo(rawExeSizes, 0);
 					for (int i = 0; i < rawExeSizes.Length; i++)
 						exeSizes[i] = (long)rawExeSizes.GetValue(i);*/
+					Externals.WarnIfSMLInstalled();
 
 					bool exeSizeRecognized = ExecutableFileGameTypes.Keys.Contains(new FileInfo(_executablePath).Length);
 					if (IsValidExe())
@@ -91,70 +92,64 @@ namespace SporeMods.Core.Injection
 							return;
 						}
 
-						// Steam users need to do something different...something which doesn't even work most of the time.
-						if (!SporeIsInstalledOnSteam())
+
+
+						MessageDisplay.DebugShowMessageBox("2. Executable type: " + _executableType);
+
+						if (_executableType == GameExecutableType.None)
+						{
+							// don't execute the game if the user closed the dialog
+							return;
+						}
+
+						// get the correct executable path
+						_executablePath = Path.Combine(SporebinEP1, ExecutableFileNames[_executableType]);
+
+						if ((_executableType == GameExecutableType.Origin__1_5_1) ||
+							(_executableType == GameExecutableType.Origin__March2017))
+						{
+							try
+							{
+								_needsOriginPrerequisites = Externals.NeedsPrerequisitesExtracted;
+							}
+							catch (Exception)
+							{
+								_needsOriginPrerequisites = true;
+							}
+							Externals.ExtractOriginPrerequisites();
+						}
+
+						if (_executableType == GameExecutableType.Steam__Oct2024)
 						{
 
-							MessageDisplay.DebugShowMessageBox("2. Executable type: " + _executableType);
-
-							if (_executableType == GameExecutableType.None)
+							try
 							{
-								// don't execute the game if the user closed the dialog
-								return;
+								_needsSteamPrerequisites = Externals.NeedsPrerequisitesExtracted;
 							}
-
-							// get the correct executable path
-							_executablePath = Path.Combine(SporebinEP1, ExecutableFileNames[_executableType]);
-
-							if ((_executableType == GameExecutableType.Origin__1_5_1) ||
-								(_executableType == GameExecutableType.Origin__March2017))
+							catch (Exception)
 							{
-								try
-								{
-									_needsOriginPrerequisites = Externals.NeedsPrerequisitesExtracted;
-								}
-								catch (Exception)
-								{
-									_needsOriginPrerequisites = true;
-								}
-								Externals.ExtractOriginPrerequisites();
+								_needsSteamPrerequisites = true;
 							}
-
-							if (_executableType == GameExecutableType.Steam__Oct2024)
-                            {
-
-								try
-								{
-									_needsSteamPrerequisites = Externals.NeedsPrerequisitesExtracted;
-								}
-								catch (Exception)
-								{
-									_needsSteamPrerequisites = true;
-								}
-								Externals.ExtractSteamPrerequisites();
-							}
-
-							string dllEnding = GetExecutableDllSuffix(_executableType);
-
-							MessageDisplay.DebugShowMessageBox("4. DLL suffix: " + dllEnding);
-
-							if (dllEnding == null)
-							{
-								MessageDisplay.DebugShowMessageBox(GetLocalizedString("LauncherError!GameVersion!NullDllSuffix")); //MessageBox.Show(Strings.VersionNotDetected, CommonStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-								return;
-							}
-
-							InjectNormalSporeProcess(dllEnding);
-
+							Externals.ExtractSteamPrerequisites();
 						}
-						else
+
+
+						string dllEnding = GetExecutableDllSuffix(_executableType);
+
+						MessageDisplay.DebugShowMessageBox("4. DLL suffix: " + dllEnding);
+
+						if (dllEnding == null)
 						{
-							InjectSteamSporeProcess();
+							MessageDisplay.DebugShowMessageBox(GetLocalizedString("LauncherError!GameVersion!NullDllSuffix")); //MessageBox.Show(Strings.VersionNotDetected, CommonStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+							return;
 						}
+
+						InjectNormalSporeProcess(dllEnding);
+
 					}
-				}
+                }
 
-				int lastError = System.Runtime.InteropServices.Marshal.GetLastWin32Error();
+                int lastError = System.Runtime.InteropServices.Marshal.GetLastWin32Error();
 
 				if ((CurrentError != 0) && (CurrentError != 18) && (CurrentError != 87) && (CurrentError != lastError))
 				{
