@@ -66,13 +66,22 @@ namespace SporeMods.Core
 
 		private static void StartSearch(string query, bool searchNames, bool searchDescriptions, bool searchTags)
 		{
+
+			while (_searching == true)
+            {
+				Thread.Sleep(17);
+            }
+
 			_searching = true;
+
+
 			Instance.SearchResults.Clear();
 			var mods = new ObservableCollection<ISporeMod>();
 			
 			ModsManager.RunOnMainSyncContext(state => mods = ModsManager.InstalledMods);
 			for (int i = 0; i < mods.Count; i++)
 			{
+				//MessageDisplay.DebugShowMessageBox($"{mods[i].DisplayName.ToString()}");
 				if (_cancel)
 				{
 					_cancel = false;
@@ -80,10 +89,15 @@ namespace SporeMods.Core
 				}
 				else
 				{
-#if MOD_IMPL_RESTORE_LATER
-					IModEntry mod = mods[i];
-					bool nameMatches = (searchNames && mod.DisplayName.Contains(query, StringComparison.OrdinalIgnoreCase));
-					bool descMatches = (searchDescriptions && mod.HasDescription && mod.Description.Contains(query, StringComparison.OrdinalIgnoreCase));
+
+
+					ISporeMod mod = mods[i];
+
+					bool nameMatches = (searchNames && mod.DisplayName.ToString().Contains(query, StringComparison.OrdinalIgnoreCase));
+
+					bool descMatches = (searchDescriptions && mod.HasInlineDescription && mod.InlineDescription.ToString().Contains(query, StringComparison.OrdinalIgnoreCase));
+
+
 					Cmd.WriteLine($"Searching in... {searchNames}, {searchDescriptions}...found {nameMatches}, {descMatches}");
 					if (nameMatches ||
 						descMatches
@@ -94,7 +108,8 @@ namespace SporeMods.Core
 						if (!Instance.SearchResults.Contains(mod))
 							Instance.SearchResults.Add(mod);
 					}
-#endif
+
+
 				}
 			}
 			_searching = false;
